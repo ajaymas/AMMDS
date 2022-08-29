@@ -1,0 +1,30 @@
+Module                  Size  Used by
+aesni_intel            18196  0 
+ablk_helper            13357  1 aesni_intel
+cryptd                 19821  1 ablk_helper
+lrw                    13127  1 aesni_intel
+aes_i586               16995  1 aesni_intel
+joydev                 17329  0 
+xts                    12778  1 aesni_intel
+gf128mul               14503  2 lrw,xts
+xen_kbdfront           12693  0 
+microcode              18433  0 
+mac_hid                13077  0 
+cirrus                 24705  0 
+ttm                    72088  1 cirrus
+psmouse                82769  0 
+serio_raw              13031  0 
+drm_kms_helper         47749  1 cirrus
+drm                   233935  3 cirrus,ttm,drm_kms_helper
+sysimgblt              12702  1 cirrus
+sysfillrect            12789  1 cirrus
+syscopyarea            12569  1 cirrus
+i2c_piix4              13227  0 
+bnep                   17852  2 
+rfcomm                 38400  0 
+bluetooth             211435  10 bnep,rfcomm
+parport_pc             27612  0 
+ppdev                  12849  0 
+lp                     17455  0 
+parport                40930  3 parport_pc,ppdev,lp
+floppy                 60183  0 

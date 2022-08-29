@@ -1,0 +1,6 @@
+Create a folder named socket and under that folder create ACN(Path should be:/home/student/socket/ACN/)
+Place java files namely Client.java and CompareFiles.java under socket folder.
+Copy the ip address of Server machine in Client.java (in variable String SERVER).
+Crate a folder named stored (under ACN folder) (Path should be:/home/student/socket/ACN/stored) where all the existing files on client system are present. (These existing files are for comparison purpose).
+Compile and run Client.java. (Enter filename like lsmod,ps,ps aux,dir,date,lsof,ifconfig)
+After complete execution four files would be generated . Already stored file(in stored folder),received file, difference file(containing difference of received and stored file), similar file (containing difference of received and stored file). Last three files will be in ACN folder.

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+gnome-terminal -x sh -c 'cd /home/itdept/Desktop/IT/examples/; sudo ./process-list DOMU1 > /home/itdept/Desktop/AutoCom/DOM0-PS.txt; exec bash'

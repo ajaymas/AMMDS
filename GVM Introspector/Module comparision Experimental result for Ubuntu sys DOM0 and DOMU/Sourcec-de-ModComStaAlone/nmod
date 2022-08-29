@@ -1,0 +1,122 @@
+#!/bin/bash
+
+start=$(date +%s.%N); 
+
+dt=`date "+%d-%m-%y:%H:%M:%S"`
+
+sed '1d' DOMU-ML.txt > tmpfile; mv tmpfile DOMU-ML.txt
+
+awk '{print $1}' DOM0-ML.txt >> lm1-$dt
+
+awk '{print $1}' DOMU-ML.txt >> lm2-$dt
+
+p1=$(find $pwd -name '*lm1*')
+sort -n "$p1" -o "$p1"
+
+p2=$(find $pwd -name '*lm2*')
+sort -n "$p2" -o "$p2"
+
+array1=()
+
+getArray() 
+{
+    i=0
+    while read line 
+    do
+        array1[i]=$line
+        i=$(($i + 1))
+    done < $1
+}
+
+getArray "$p1"
+
+#echo -e "\n"
+
+len1=${#array1[@]}
+#echo "The length of the array1 is $len1"
+
+<<COMMENT1
+echo -e "The contents of array1 are: \n"
+for e in "${array1[@]}"
+do
+    echo "$e"
+done
+
+echo -e "\n"
+COMMENT1
+#to read the elements of file2 in to array
+
+array2=()
+
+getArray() {
+    i=0
+    while read line 
+    do
+        array2[i]=$line 
+        i=$(($i + 1))
+    done < $1
+}
+
+getArray "$p2"
+
+#echo -e "\n"
+
+len2=${#array2[@]}
+#echo "The length of the array2 is $len2"
+
+<< COMMENT
+echo -e "The contents of array2 are: \n"
+for e in "${array2[@]}"
+do
+    echo "$e"
+done
+
+echo -e "\n"
+COMMENT
+
+i=0
+j=0
+
+while [ "$i" -lt "$len1" ] && [ "$j" -lt "$len2" ]
+do
+	if [ "${array1[$i]}" \> "${array2[$j]}" ]
+	then
+		echo "${array2[$j]}" >> UNM-DOMU-ML
+		j=`expr $j + 1`
+		#echo "J is $j"
+	elif [ "${array1[$i]}" == "${array2[$j]}" ]
+	then
+		echo "${array1[$i]}" >> match
+		#echo "${array2[$j]}" >> matchB
+		i=`expr $i + 1`
+		j=`expr $j + 1`
+		#echo "I is $i"
+	else	
+		echo "${array1[$i]}" >> UNM-DOM0-ML
+		i=`expr $i + 1`
+	fi
+done
+
+if [ "$i" -gt "$j" ]
+then
+	#echo "$i is greater than $j"
+	for (( i=$j; i<$len2; i++));
+	do
+		echo "${array2[$i]}" >> UNM-DOMU-ML
+	done
+else
+	#echo "$i is lesser than $j"
+	for (( j=$i; j<$len1; j++));
+	do
+		echo "${array1[$j]}" >> UNM-DOM0-ML
+	done
+fi
+
+echo "no of items common in both DOMO-ML and DOMU-ML are `wc -l match`" | tee -a match
+
+echo "no of items in DOMO-ML  not equal to items in DOMU-ML are `wc -l UNM-DOM0-ML`" | tee -a UNM-DOM0-ML
+echo "no of items in DOMU-ML not equal to items in DOMO-ML  are `wc -l UNM-DOMU-ML`" | tee -a UNM-DOMU-ML
+
+dur=$(echo "$(date +%s.%N) - $start" | bc); 
+printf "Execution time: %.6f seconds\n" $dur
+

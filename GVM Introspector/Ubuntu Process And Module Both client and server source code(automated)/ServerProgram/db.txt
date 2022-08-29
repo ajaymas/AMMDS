@@ -1,0 +1,7 @@
+aaa		ps -e
+bbb		lsmod
+ccc		ls
+ddd		netstat
+eee 		date
+fff		lsof
+ggg		psscan

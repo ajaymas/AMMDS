@@ -1,0 +1,128 @@
+#!/bin/bash
+
+start=$(date +%s.%N); 
+
+dt=`date "+%d-%m-%y:%H:%M:%S"`
+
+sed '1d' DOMU-PS.txt > tmpfile; mv tmpfile DOMU-PS.txt
+
+sed '1d' DOM0-PS.txt > tmpfile; mv tmpfile DOM0-PS.txt
+
+awk '{print $1"\t"$4}' DOMU-PS.txt >> file1
+
+awk -F '[][(]' '{sub(/ +/, ""); print $2"\t"$3}' DOM0-PS.txt >> file2
+
+sort -n file1 -o file1
+
+sort -n file2 -o file2
+
+while read LINE
+do
+        printf "%-10s %s\n" $LINE >> zx1-$dt
+done < file1 
+
+while read LINE
+do
+        printf "%-10s %s\n" $LINE >> zx2-$dt
+done < file2
+
+t1=$(find $pwd -name '*zx1*')
+
+#echo "$t1"
+
+t2=$(find $pwd -name '*zx2*')
+
+#echo "$t2"
+
+array1=()
+
+getArray() 
+{
+    i=0
+    while read line 
+    do
+        array1[i]=$line
+        i=$(($i + 1))
+    done < $1
+}
+
+getArray "$t1"
+
+len1=${#array1[@]}
+#echo "The length of the array1 is $len1"
+
+#echo -e "The contents of array1 are: \n"
+for e in "${array1[@]}"
+do
+    echo "$e" >> array1
+done
+
+array2=()
+
+getArray() {
+    i=0
+    while read line 
+    do
+        array2[i]=$line 
+        i=$(($i + 1))
+    done < $1
+}
+
+getArray "$t2"
+
+len2=${#array2[@]}
+#echo "The length of the array2 is $len2"
+
+#echo -e "The contents of array2 are: \n"
+for e in "${array2[@]}"
+do
+    echo "$e" >> array2
+done
+
+i=0
+j=0
+
+while [ "$i" -lt "$len1" ] && [ "$j" -lt "$len2" ]
+do
+	#echo "$i of array1 ${array1[$i]} and $j of array2 ${array2[$j]}" >> look
+	if [ "${array1[$i]}" == "${array2[$j]}" ]
+	then
+		echo "${array1[$i]}" >> match
+		#echo "${array2[$j]}" >> matchB
+		i=`expr $i + 1`
+		j=`expr $j + 1`
+	elif [ "${array1[$i]}" != "${array2[$j]}" ]
+	then
+		if [ "${array1[$i]}" \> "${array2[$j]}" ]
+		then
+			echo "${array2[$j]}" >> UNM-DOM0-PS
+			j=`expr $j + 1`
+		else	
+			echo "${array1[$i]}" >> UNM-DOMU-PS
+			i=`expr $i + 1`
+		fi
+	fi
+done
+
+if [ "$i" -ge "$j" ]
+then
+	#echo "$i is greater than $j"
+	for (( i=$j; i<$len2; i++));
+	do
+		echo "${array2[$i]}" >> UNM-DOM0-PS
+	done	
+else
+	#echo "$i is lesser than $j"
+	for (( j=$i; j<$len1; j++));
+	do
+		echo "${array1[$j]}" >> UNM-DOMU-PS
+	done
+fi
+
+echo "no of items common in both DOMU-PS and DOM0-PS are `wc -l match`" | tee -a match
+
+echo "no of items in DOMU-PS not equal to items in DOM0-PS are `wc -l UNM-DOMU-PS`" | tee -a UNM-DOMU-PS
+echo "no of items in DOM0-PS not equal to items in DOMU-PS are `wc -l UNM-DOM0-PS`" | tee -a UNM-DOM0-PS
+
+dur=$(echo "$(date +%s.%N) - $start" | bc); 
+printf "Execution time: %.6f seconds\n" $dur

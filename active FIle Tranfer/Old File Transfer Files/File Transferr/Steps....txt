@@ -1,0 +1,3 @@
+Put attached ACN folder in C drive of Client.(contains stored files for comparison)
+
+Make one ACN folder in C drive of Server taht will contail the existing files that can be sent.

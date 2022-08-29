@@ -1,0 +1,13 @@
+Active Connections
+
+  Proto  Local Address          Foreign Address        State
+  TCP    10.100.55.75:49607     maa03s18-in-f37:https  ESTABLISHED
+  TCP    10.100.55.75:49633     74.125.68.189:https    ESTABLISHED
+  TCP    10.100.55.75:49651     115.112.3.4:http       TIME_WAIT
+  TCP    10.100.55.75:49668     bom05s05-in-f14:https  ESTABLISHED
+  TCP    10.100.55.75:49669     bom03s05-in-f14:https  ESTABLISHED
+  TCP    10.100.55.75:49670     bom03s05-in-f14:https  ESTABLISHED
+  TCP    10.100.55.75:49676     173.194.46.88:https    ESTABLISHED
+  TCP    10.100.55.75:49677     173.194.46.88:https    TIME_WAIT
+  TCP    [::1]:49473            admin09-HP8100:49475   ESTABLISHED
+  TCP    [::1]:49475            admin09-HP8100:49473   ESTABLISHED

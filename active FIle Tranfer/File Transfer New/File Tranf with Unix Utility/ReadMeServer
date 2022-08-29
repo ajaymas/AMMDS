@@ -1,0 +1,3 @@
+Create a folder with name socket and under that folder create folder ACN.(Path should be: /home/pgadmin10/socket/ACN/).
+Place java files, Server_Socket.java and PromptTest.java in socket folder.
+compile and run Server_Socket.java.

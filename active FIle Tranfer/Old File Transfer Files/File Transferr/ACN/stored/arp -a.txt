@@ -1,0 +1,10 @@
+Interface: 10.100.55.75 --- 0xb
+  Internet Address      Physical Address      Type
+  10.100.52.1           00-0c-db-9d-02-00     dynamic
+  10.100.53.131         2c-41-38-a9-4c-85     dynamic
+  10.100.55.255         ff-ff-ff-ff-ff-ff     static
+  224.0.0.2             01-00-5e-00-00-02     static
+  224.0.0.22            01-00-5e-00-00-16     static
+  224.0.0.252           01-00-5e-00-00-fc     static
+  239.255.255.250       01-00-5e-7f-ff-fa     static
+  255.255.255.255       ff-ff-ff-ff-ff-ff     static

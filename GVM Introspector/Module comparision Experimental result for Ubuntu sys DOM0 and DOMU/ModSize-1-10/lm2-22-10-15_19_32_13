@@ -1,0 +1,10 @@
+ablk_helper
+aes_i586
+aesni_intel
+bluetooth
+bnep
+cryptd
+lrw
+parport_pc
+ppdev
+rfcomm

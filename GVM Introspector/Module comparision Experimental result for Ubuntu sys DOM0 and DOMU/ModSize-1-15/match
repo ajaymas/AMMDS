@@ -1,0 +1,16 @@
+ablk_helper
+aes_i586
+aesni_intel
+bluetooth
+bnep
+cirrus
+cryptd
+gf128mul
+joydev
+lrw
+parport_pc
+ppdev
+rfcomm
+ttm
+xts
+no of items common in both DOMO-ML and DOMU-ML are 15 match
